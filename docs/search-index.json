@@ -30,6 +30,16 @@
     "searchText": "llm 모델 이론 autoregressive transformer transformer와 autoregressive language model gpt 계열 모델을 이해하려면 transformer라는 신경망 구조와 autoregressive라는 확률 모델링 방식을 분리해서 본 뒤 다시 결합해야 한다. transformer는 token 표현이 attention과 feed forward network를 통과하며 갱신되는 방법을 정한다. autoregressive language model은 문장 확률을 왼쪽에서 오른쪽 조건부 확률의 곱으로 분해한다. decoder only llm은 두 선택을 결합해, 주어진 prefix 다음에 올 token의 분포를 반복해서 예측한다 [s1][s2][s3]."
   },
   {
+    "id": "chapter:long-context-sparse-attention",
+    "kind": "chapter",
+    "track": "LLM 모델 이론",
+    "section": "Autoregressive Transformer",
+    "title": "긴 문맥을 읽는 방식: DSA, Lightning Indexer, KPool",
+    "summary": "긴 계약서 마지막에 “앞에서 정한 갱신 조건이 뭐였지?”라는 질문이 붙었다고 하자. 최근 토큰만 보는 창은 읽을 범위를 쉽게 정하지만, 조건이 문서 앞부분에 있으면 그 위치를 현재 층에서 직접 참조할 수 없다. DeepSeek Sparse Attention(DSA)은 쿼리마다 과거 후보를 점수화해 읽을 위치를 고른다. GLM 5.3 Flash의 KPool은 점수를 매길 후보를 토큰 그룹으로 묶고, DeepSeek V4의 CSA는 본 어텐션이 읽을 KV 항목까지 압축한다. [S1][S2][S3][S4][S5]",
+    "href": "01-llm-models/01-autoregressive-transformers/02-long-context-sparse-attention/",
+    "searchText": "llm 모델 이론 autoregressive transformer 긴 문맥을 읽는 방식: dsa, lightning indexer, kpool 긴 계약서 마지막에 “앞에서 정한 갱신 조건이 뭐였지?”라는 질문이 붙었다고 하자. 최근 토큰만 보는 창은 읽을 범위를 쉽게 정하지만, 조건이 문서 앞부분에 있으면 그 위치를 현재 층에서 직접 참조할 수 없다. deepseek sparse attention(dsa)은 쿼리마다 과거 후보를 점수화해 읽을 위치를 고른다. glm 5.3 flash의 kpool은 점수를 매길 후보를 토큰 그룹으로 묶고, deepseek v4의 csa는 본 어텐션이 읽을 kv 항목까지 압축한다. [s1][s2][s3][s4][s5]"
+  },
+  {
     "id": "section:01-llm-models/02-mixture-of-experts",
     "kind": "section",
     "track": "LLM 모델 이론",
