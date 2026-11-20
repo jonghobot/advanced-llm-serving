@@ -32,6 +32,8 @@ source_count: 6
 
 **교수자:** 고정된 local window에서는 현재 층이 직접 참조할 수 있는 위치가 거리로 정해집니다. Longformer는 local window에 일부 위치의 global attention을 결합하는 사례입니다. DSA는 쿼리 내용에 따라 참조 위치를 바꾸는 접근입니다. [S1][S2]
 
+예를 들어 causal window가 현재 위치를 포함해 4토큰이면 8번째 쿼리는 5~8번을 본다. 4토큰 블록을 연산 단위로 쓰면 1~4번 블록 전체를 건너뛸 수 있다. 7번째 쿼리는 4~7번을 보므로 두 블록에 걸치고, 블록 내부의 1~3번과 8번은 가린다. 토큰별 참조 규칙을 블록에 옮길 때 이 경계 처리가 필요하다.
+
 **교수자:** DeepSeek-V3.2의 Lightning Indexer는 과거 위치마다 별도의 indexer key를 사용합니다. 쿼리 쪽의 여러 indexer head가 낸 점수를 가중합하고, causal 범위 안에서 상위 위치를 고릅니다. 본 어텐션은 그 위치의 MLA KV 항목을 읽어 자기 가중치로 출력을 계산합니다. 아래 식에서 $I_{t,s}$는 후보의 순위를 매기는 점수입니다. [S2]
 
 $$
@@ -79,6 +81,8 @@ flowchart LR
 DeepSeek-V4.1-Flash의 CSA2에서는 층 간 main KV 공유와 top-k 인덱스 재사용을 별도로 구성한다. 디코더의 계층형 indexer는 앞선 indexer가 만든 후보 집합을 활용해 이후 indexer가 점수화할 범위를 제한한다. KPool과 나란히 읽을 때는 **후보 한 개의 단위를 바꿨는지**, **다음 탐색의 후보 집합을 좁혔는지**, **이미 고른 인덱스를 재사용했는지**를 표시해 보자. [S6]
 
 이어 읽기: [Long-Context Serving and KV Memory](../../../02-serving-systems/02-cache-batching-and-generation/06-long-context-serving-and-kv-memory/README.md)에서 indexer, top-k, KV 조회, 본 어텐션을 따로 측정한다.
+
+[어텐션 헤드와 KV 표현](../03-attention-heads-and-kv-representations/README.md)은 MLA가 저장하는 값을, [Linear Attention과 Hybrid 모델](../04-linear-and-hybrid-attention/README.md)은 과거를 상태에 누적하는 방식을 설명한다.
 
 ## 출처
 
